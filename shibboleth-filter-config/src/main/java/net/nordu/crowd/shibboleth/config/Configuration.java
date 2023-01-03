@@ -34,14 +34,16 @@ public class Configuration {
    private String configFile;
    private long configFileLastModified;
    private long configFileLastChecked;
+   private boolean createUser;
    private String directoryName;
    private boolean latin1ToUTF8;
+   private boolean headersUrldecode;
    private String firstNameHeader;
    private String lastNameHeader;
    private String emailHeader;
    private Set<String> homeOrganizations;
    private Map<String, String> applicationMap;   
-   private boolean syncEveryLogin;   
+   private boolean syncEveryLogin;
    private Set<String> attributeHeaders;   
 
    public String getEmailHeader() {
@@ -148,6 +150,14 @@ public class Configuration {
       this.directoryName = directoryName;
    }
 
+   public boolean isCreateUser() {
+      return createUser;
+   }
+
+   public void setCreateUser(boolean createUser) {
+      this.createUser = createUser;
+   }
+
    public Set<String> getHomeOrganizations() {
       return homeOrganizations;
    }
@@ -162,6 +172,14 @@ public class Configuration {
 
    public void setLatin1ToUTF8(boolean latin1ToUTF8) {
       this.latin1ToUTF8 = latin1ToUTF8;
+   }
+
+   public boolean isHeadersUrldecode() {
+      return headersUrldecode;
+   }
+
+   public void setHeadersUrldecode(boolean headersUrldecode) {
+      this.headersUrldecode = headersUrldecode;
    }
 
    public void setApplicationMap(Map<String, String> applicationMap) {

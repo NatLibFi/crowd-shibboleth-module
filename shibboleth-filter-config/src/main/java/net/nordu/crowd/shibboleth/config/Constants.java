@@ -20,6 +20,7 @@ package net.nordu.crowd.shibboleth.config;
  */
 interface Constants {
 
+    public static final String CONFIG_FILE_ENV_NAME = "SHIBBOLETH_FILTER_CONFIG";
     public static final String CONFIG_FILE = "/ShibbolethSSOFilter.properties";
     public static final String DELIMITER = ".";
     public static final String DELIMITER_REGEX = "\\.";
@@ -33,8 +34,10 @@ interface Constants {
     public static final String DYNAMIC_GROUP_PURGE_PREFIX = "dynamic.group.purge.prefix";
     public static final String RELOAD_CONFIG = "reload.config";
     public static final String RELOAD_CONFIG_INTERVAL = "reload.config.interval";
+    public static final String CREATE_USER = "create.user";
     public static final String DIRECTORY_NAME = "directory.name";
     public static final String LATIN1_TO_UTF8 = "headers.latin1toutf8";
+    public static final String HEADERS_URLDECODE = "headers.urldecode";
     public static final String HEADER_FIRST_NAME = "headers.firstname";
     public static final String HEADER_LAST_NAME = "headers.lastname";
     public static final String HEADER_MAIL = "headers.mail";
