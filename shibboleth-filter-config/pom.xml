@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <crowd.version>4.4.0</crowd.version>
+        <crowd.version>5.2.1</crowd.version>
     </properties>
 
     <dependencies>
