@@ -37,7 +37,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -293,9 +292,9 @@ public class ShibbolethSSOFilter extends AbstractAuthenticationProcessingFilter 
                   if (statusCode != HttpStatus.SC_OK) {
                      log.warn("Could not sync user {} using url {}", username, url);
                   }
-               } catch (HttpException e) {
+               } /*catch (HttpException e) {
                   log.error("Fatal protocol violation. Could not sync user {} using url {}", username, url, e);
-               } catch (IOException e) {
+               }*/ catch (IOException e) {
                   log.error("Fatal transport error Could not sync user {} using url {}", username, url, e);
                } finally {
                   get.releaseConnection();
@@ -685,7 +684,7 @@ public class ShibbolethSSOFilter extends AbstractAuthenticationProcessingFilter 
          
          long configFileLastModified = 0;
          try {
-            configFileLastModified = Paths.get(new URI(config.getConfigFile())).toFile().lastModified();
+            configFileLastModified = Paths.get(new URI("file:///"+config.getConfigFile())).toFile().lastModified();
          } catch (URISyntaxException e) {
          }
          

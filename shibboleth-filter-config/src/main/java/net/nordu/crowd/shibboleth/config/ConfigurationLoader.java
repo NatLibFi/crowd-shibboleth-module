@@ -54,7 +54,7 @@ public class ConfigurationLoader {
             InputStream propsIn = null;
             if (configFilePath != null) {
                try {
-                  File configFile = Paths.get(new URI(configFilePath)).toFile();
+                  File configFile = Paths.get(new URI("file:///"+configFilePath)).toFile();
                   propsIn = new FileInputStream(configFile);
                } catch (URISyntaxException | IOException e) {
                   throw new RuntimeException("Error loading configuration properties from file " + configFilePath, e);
@@ -91,7 +91,7 @@ public class ConfigurationLoader {
                config.setConfigFile(configFilePath);
                long configFileLastModified;
                try {
-                  configFileLastModified = Paths.get(new URI(configFilePath)).toFile().lastModified();
+                  configFileLastModified = Paths.get(new URI("file:///"+configFilePath)).toFile().lastModified();
                   config.setConfigFileLastModified(configFileLastModified);
                } catch (URISyntaxException e) {
                }
@@ -181,7 +181,7 @@ public class ConfigurationLoader {
          if (configFilePath == null) {
             return null;
          }
-         File configFile = Paths.get(new URI(configFilePath)).toFile();
+         File configFile = Paths.get(new URI("file:///"+configFilePath)).toFile();
          if (configFile.isFile()) {
             return configFile;
          }
