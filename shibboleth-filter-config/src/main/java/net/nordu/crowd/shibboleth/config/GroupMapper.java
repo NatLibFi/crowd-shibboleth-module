@@ -16,7 +16,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class for mapping groups for users based on HttpServletRequest headers
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class GroupMapper {
-    private static final Logger log = Logger.getLogger(GroupMapper.class);
+    private static final Logger log = LoggerFactory.getLogger(GroupMapper.class);
     private String group;
     private Map<String, String> headerMatches;
     // do all the header matches have to pass or just any one of them
