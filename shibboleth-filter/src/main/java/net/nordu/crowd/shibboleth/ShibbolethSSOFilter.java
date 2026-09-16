@@ -96,6 +96,7 @@ import com.atlassian.crowd.model.group.GroupWithAttributes;
 import com.atlassian.crowd.model.token.Token;
 import com.atlassian.crowd.model.user.User;
 import com.atlassian.crowd.model.user.UserTemplate;
+import com.atlassian.crowd.model.user.UserTemplateWithAttributes;
 import com.atlassian.crowd.search.EntityDescriptor;
 import com.atlassian.crowd.search.builder.QueryBuilder;
 import com.atlassian.crowd.search.query.entity.restriction.NullRestrictionImpl;
@@ -392,8 +393,7 @@ public class ShibbolethSSOFilter extends AbstractAuthenticationProcessingFilter 
    private boolean createUser(String username, String firstname, String lastname, String email, String password, Map<String, Set<String>> attributes) {
       try {
          Directory directory = directoryManager.findDirectoryByName(config.getDirectoryName());
-         UserTemplate template = new UserTemplate(username);
-         template.setDirectoryId(directory.getId());
+         UserTemplateWithAttributes template = new UserTemplateWithAttributes(username, directory.getId());
          template.setFirstName(firstname);
          template.setLastName(lastname);
          template.setEmailAddress(email);
