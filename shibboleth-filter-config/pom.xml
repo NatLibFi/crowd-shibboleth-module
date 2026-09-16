@@ -4,7 +4,7 @@
 
     <groupId>com.eduix.crowd</groupId>
     <artifactId>shibboleth-filter-config</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <packaging>jar</packaging>
 
     <name>Crowd Shibboleth filter configuration</name>
@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <crowd.version>5.2.1</crowd.version>
+        <crowd.version>6.0.10</crowd.version>
     </properties>
 
     <dependencies>
@@ -53,7 +53,7 @@
                 <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
-                    <target>1.8</target>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
