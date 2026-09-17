@@ -2,30 +2,40 @@
 
 This version works only with Crowd 3.0+ due to API changes.
 
+This repo has three independent Maven modules (no reactor `pom.xml`), built and
+installed separately:
+
+* `shibboleth-filter-config` &mdash; shared configuration-loading library, required by `shibboleth-filter`.
+* `shibboleth-filter` &mdash; the Shibboleth authentication filter for Crowd; see [shibboleth-filter/README.md](shibboleth-filter/README.md) and [CONFIGURATION.md](CONFIGURATION.md) for how it works and how to configure it.
+* `nordunet-sso` &mdash; legacy multi-domain SSO-cookie plugin, providing the `/ssocookie`, `/setcookie` and `/setEmail` servlets used by the "Apache Shibboleth Module" / "Enabling" steps below. Many deployments replace this with their own SSO-cookie plugin; only build it if you need those endpoints.
+
 # Steps
 
 ## Creating JAR files
 
-Assuming Ubuntu 14.04, run the following commands as root:
+Requires the [Atlassian Plugin SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/) and a matching JDK for your target Crowd version. Adjust paths below to your SDK installation.
 
 ```shell
-apt-get install -y apt-transport-https
-echo "deb https://sdkrepo.atlassian.com/debian/ stable contrib" >> /etc/apt/sources.list
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B07804338C015B73
-apt-get update
-apt-get install -y atlassian-plugin-sdk
+git clone https://github.com/NatLibFi/crowd-shibboleth-module
+cd crowd-shibboleth-module
 
-cd /root
-git clone https://github.com/Eduix/crowd-shibboleth-module
-cd crowd-shibboleth-module/shibboleth-filter-config
+# 1. Shared config library
+cd shibboleth-filter-config
 atlas-package
+CONFIG_VERSION=$(grep -m1 '<version>' pom.xml | sed -e 's/.*<version>//' -e 's/<\/version>.*//')
 cp target/*.jar /opt/atlassian/crowd/crowd-webapp/WEB-INF/lib
+
+# 2. Shibboleth filter (depends on the jar just built above)
 cd ../shibboleth-filter
-/usr/share/atlassian-plugin-sdk-6.2.8/apache-maven-3.2.1/bin/mvn install:install-file -DgroupId=com.eduix.crowd -DartifactId=shibboleth-filter-config -Dversion=1.1.1 -Dpackaging=jar -Dfile=/root/crowd-shibboleth-module/shibboleth-filter-config/target/shibboleth-filter-config-1.1.1.jar
+mvn install:install-file -DgroupId=com.eduix.crowd -DartifactId=shibboleth-filter-config \
+    -Dversion="$CONFIG_VERSION" -Dpackaging=jar \
+    -Dfile=../shibboleth-filter-config/target/shibboleth-filter-config-"$CONFIG_VERSION".jar
 atlas-package
 cp target/*.jar /opt/atlassian/crowd/crowd-webapp/WEB-INF/lib
 chown crowd: /opt/atlassian/crowd/crowd-webapp/WEB-INF/lib/*.jar
-cd ~/crowd-shibboleth-module/nordunet-sso
+
+# 3. (Optional, legacy) NORDUnet multi-domain SSO plugin
+cd ../nordunet-sso
 atlas-package
 cp target/*.jar /opt/atlassian/home/plugins/
 chown crowd: /opt/atlassian/home/plugins/*
@@ -37,12 +47,19 @@ chown crowd: /opt/atlassian/home/plugins/*
 
 ```shell
 cd /opt/atlassian/crowd/crowd-webapp/WEB-INF/classes
-wget -O ShibbolethSSOFilter.properties https://raw.githubusercontent.com/Eduix/crowd-shibboleth-module/master/shibboleth-filter/src/main/resources/ShibbolethSSOFilter.example.properties
+curl -o ShibbolethSSOFilter.properties https://raw.githubusercontent.com/NatLibFi/crowd-shibboleth-module/master/shibboleth-filter/src/main/resources/ShibbolethSSOFilter.example.properties
+# or: wget -O ShibbolethSSOFilter.properties https://raw.githubusercontent.com/NatLibFi/crowd-shibboleth-module/master/shibboleth-filter/src/main/resources/ShibbolethSSOFilter.example.properties
 ```
 
-* Edit `applicationContext-CrowdSecurity.xml` by following the instructions in the `shibboleth-filter/README.TXT` file.
+* Edit `applicationContext-CrowdSecurity.xml` by following the instructions in [shibboleth-filter/README.md](shibboleth-filter/README.md).
 
 ## Apache Shibboleth Module
+
+The steps below use the `nordunet-sso` plugin's `/ssocookie` servlet as the
+Shibboleth-protected discovery URL. If you're not using that plugin (e.g. you
+have your own SSO-cookie handling), protect the actual login URL
+(`filterProcessesUrl`, e.g. `/console/j_security_check`) with Shibboleth
+instead, so the filter sees `REMOTE_USER` and the configured headers directly.
 
 * Require Shibboleth authentication on the `ssocookie` servlet:
 

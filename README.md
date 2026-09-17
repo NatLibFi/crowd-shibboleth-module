@@ -1,18 +1,22 @@
 crowd-shibboleth-module
 =======================
 
-Shibboleth authentication module and accompanying plugin for Atlassian Crowd
+Shibboleth authentication module and accompanying plugin for Atlassian Crowd.
+
+## Modules
+
+* [shibboleth-filter](shibboleth-filter/README.md) &mdash; the Spring Security filter that authenticates users against Crowd using HTTP headers set by Shibboleth. This is the module in active use.
+* `shibboleth-filter-config` &mdash; shared library that loads `ShibbolethSSOFilter.properties`, used by `shibboleth-filter`.
+* `nordunet-sso` &mdash; legacy multi-domain SSO-cookie plugin, superseded in most deployments by a custom SSO-cookie plugin.
+
+## Documentation
+
+* [INSTALL.md](INSTALL.md) &mdash; building and installing the modules, and wiring up Apache/Shibboleth.
+* [CONFIGURATION.md](CONFIGURATION.md) &mdash; full `ShibbolethSSOFilter.properties` reference.
+
+## License
+
+BSD 3-Clause, see [LICENSE](LICENSE).
 
 By downloading any of the crowd-shibboleth-module files you acknowledge that you have Read and Accepted the NORDUnet IPR Policy:
 https://wiki.nordu.net/display/NORDUwiki/NORDUnet+IPR+Policy
-
-Copyright (c) 2011, NORDUnet A/S
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-    * Neither the name of the NORDUnet nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

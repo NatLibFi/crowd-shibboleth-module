@@ -50,4 +50,9 @@ Then add this bean definition after the authenticationProcessingFilter bean:
         <property name="requestToApplicationMapper" ref="requestToApplicationMapper"/>
     </bean>
 
-Finally you need to create a ShibbolethSSOFilter.properties file in %crowd-webapp%/WEB-INF/classes. There is an example file under src/main/resources/
+Finally you need to create a `ShibbolethSSOFilter.properties` file in
+`%crowd-webapp%/WEB-INF/classes` (or elsewhere, pointed to by the
+`SHIBBOLETH_FILTER_CONFIG` environment variable). See
+[src/main/resources/ShibbolethSSOFilter.example.properties](src/main/resources/ShibbolethSSOFilter.example.properties)
+for an example, and [../CONFIGURATION.md](../CONFIGURATION.md) for the full
+list of options.
