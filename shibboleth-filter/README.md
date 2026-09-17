@@ -43,7 +43,7 @@ Then add this bean definition after the authenticationProcessingFilter bean:
                 <property name="defaultFailureUrl" value="/console/login.action?error=true"/>
             </bean>
         </property>
-         
+
         <property name="authenticationSuccessHandler">
             <bean class="net.nordu.crowd.shibboleth.SavedRequestAwarePassThroughAuthenticationSuccessHandler" />
         </property>
