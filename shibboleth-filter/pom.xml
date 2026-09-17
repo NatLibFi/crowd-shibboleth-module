@@ -18,6 +18,31 @@
     <description>Crowd Shibboleth filter</description>
     <packaging>atlassian-plugin</packaging>
 
+    <!--
+      Crowd 7.x's SAML support pulls in a transitive javax.xml.bind:jaxb-api build
+      whose own POM points at dead/blocked java.net repositories. Pin it (and two
+      related artifacts) to versions with working POMs on Maven Central.
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.istack</groupId>
+                <artifactId>istack-commons-runtime</artifactId>
+                <version>3.0.12</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.fastinfoset</groupId>
+                <artifactId>FastInfoset</artifactId>
+                <version>1.2.16</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>com.eduix.crowd</groupId>
@@ -31,6 +56,16 @@
             <artifactId>crowd-core</artifactId>
             <version>${crowd.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.opensaml</groupId>
+                    <artifactId>opensaml-saml-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opensaml</groupId>
+                    <artifactId>opensaml-saml-impl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -38,8 +73,22 @@
             <artifactId>crowd-server</artifactId>
             <version>${crowd.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.opensaml</groupId>
+                    <artifactId>opensaml-saml-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opensaml</groupId>
+                    <artifactId>opensaml-saml-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.velocity</groupId>
+                    <artifactId>velocity</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>bouncycastle</groupId>
             <artifactId>bcprov-jdk14</artifactId>
@@ -75,9 +124,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -108,8 +157,8 @@
     </build>
 
     <properties>
-        <crowd.version>6.3.6</crowd.version>
-        <crowd.data.version>6.3.6</crowd.data.version>
+        <crowd.version>7.2.3</crowd.version>
+        <crowd.data.version>7.2.3</crowd.data.version>
     </properties>
 
 </project>
