@@ -13,7 +13,8 @@
 package net.nordu.crowd.shibboleth;
 
 import java.io.UnsupportedEncodingException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * String utility class
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class StringUtil {
-    private static final Logger log = Logger.getLogger(StringUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(StringUtil.class);
 
     /**
      * Converts ISO-8859-1 encoded string to UTF-8
