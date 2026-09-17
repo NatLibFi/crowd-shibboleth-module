@@ -113,8 +113,8 @@
     </build>
 
     <properties>
-        <crowd.version>6.0.10</crowd.version>
-        <crowd.data.version>6.0.10</crowd.data.version>
+        <crowd.version>6.3.6</crowd.version>
+        <crowd.data.version>6.3.6</crowd.data.version>
     </properties>
 
 </project>
